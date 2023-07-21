@@ -38,6 +38,8 @@ nav > ul >li{
 }
 /* header end */
 
+
+/* main */
 #container{
 	position: relative;
     width: 950px;
@@ -58,6 +60,7 @@ nav > ul >li{
 .search-var{
 	display: flex;
 	justify-content: space-around;
+	padding-bottom: 80px;
 }
 
 .search-input{
@@ -69,10 +72,25 @@ nav > ul >li{
     border-radius: 5px;
 }
 
+#write-btn{
+	border-radius: 5px;
+    border: none;
+    width: 80px;
+    background-color: cadetblue;
+    color: wheat;
+}
 
 
+/* list 부분  */
+#list-title{
+	display: flex;
+	border-bottom: 3px solid black; 
+}
 
-
+#articleList{
+	display: flex;
+	border-bottom: 1px solid black; 
+}
 
 
 

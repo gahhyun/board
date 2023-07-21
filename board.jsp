@@ -2,7 +2,9 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <c:set var="path" value="${pageContext.request.contextPath}"/>  
+<c:set var="user_no" value="${sessionScope.user_no}" />
 <c:set var="loginout" value="${sessionScope.id == null ? 'logout' : 'login'}" />
 <c:set var="loginoutlink" value="${sessionScope.id==null ? '/login' : '/mypage'}" />
 <!DOCTYPE html>
@@ -33,6 +35,7 @@
 		</div>
 		
 		<div id="container">
+		<form action='<c:url value="/board/board"/>' method="get">
 			<div class="search-var">
 				<div class="dropdown">
 				  <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -44,12 +47,33 @@
 				  </ul>
 				</div>
 				<input  type="text" class="search-input" name="keyword" value="${ param.keyword }"/>
-		        <button type="submit" class="btn btn-outline-success" id="btn">검색</button>			
+		        <button type="submit" class="btn btn-outline-success" id="btn">검색</button>		
+		        <c:if test="${user_no != null}">
+		        	<button id="write-btn">글작성</button>
+				</c:if>	
+			</div>		
+		</form>
+			<div>
+				<div id="list-title">
+					<div style="padding: 5px 5px; font-size: 25px; font-family: fantasy; ">NO</div>
+					<div style="padding: 5px 300px; font-size: 25px;  font-weight: 900; ">제목</div>
+					<div style="padding: 5px 50px 5px 20px; font-size: 25px;     font-weight: 900; ">작성자</div>
+					<div style="padding: 5px 5px; font-size: 25px;     font-weight: 900; ">작성시간</div>
+				</div>
 			</div>
-
-				
-				
+			<%-- <c:forEach var="articleDTO" items="${list}"> --%>
+				<div>
+					<div id="articleList" style="position: relative;">
+						<div style="padding: 10px 40px 10px 7px;">77</div>
+						<div style="padding: 10px 25px 10px 10px; width: 625px">제목이 보여짐rkskekfkakqktk</div>
+						<div style="padding: 10px 20px; width: 140px;">작성자</div>
+						<div style="padding: 10px 10px; ">2023-07-22</div>
+					</div>
+				</div>
+			<%-- </c:forEach> --%>
 		</div>
+		
+
 		
 		<script>
 			$(document).ready(function(){
