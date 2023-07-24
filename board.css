@@ -14,37 +14,26 @@ body{
 /* header start  */
 header{
 	background-color: #CBB8EE;
-	color: white;
-	display: flex;
-	justify-content: space-between;
 	padding: 20px 400px;
 	position: sticky;  /* 고정 시킴 */
   	top: 0;
 }
 
-header a, header nav a{
+header a{
 	color: wheat; 
   	text-decoration: none; 
 }
 
-nav > ul{
-	display: flex;
-	list-style: none;
-}
 
-nav > ul >li{
-	padding-right: 40px;
-	font-size: 25px;
-}
 /* header end */
 
-
-/* main */
 #container{
+	display: flex;
 	position: relative;
+	justify-content: space-between;
     width: 950px;
-    margin: 40px auto;
-    padding-bottom: 60px;
+    margin: 10px auto;
+    padding-bottom: 15px;
 }
 
 .btn{
@@ -59,8 +48,9 @@ nav > ul >li{
 
 .search-var{
 	display: flex;
-	justify-content: space-around;
-	padding-bottom: 80px;
+    flex-direction: row;
+    align-content: center;
+    flex-wrap: wrap;
 }
 
 .search-input{
@@ -82,15 +72,26 @@ nav > ul >li{
 
 
 /* list 부분  */
+#main-container{
+	position: relative;
+	width: 950px;
+	left: 450px;
+}
+
 #list-title{
 	display: flex;
 	border-bottom: 3px solid black; 
 }
 
+
 #articleList{
 	display: flex;
 	border-bottom: 1px solid black; 
 }
+
+
+
+
 
 
 

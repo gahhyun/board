@@ -20,39 +20,32 @@
 	</head>
 	<body>
 		<div>
-			<header>
-				<h1><a href="<c:url value="/" />">HOME</a></h1>
-				<nav>
-					<ul>
-						<li><a href="https://www.wavve.com/index.html">Wavve</a></li>
-						<li><a href="https://www.tving.com/onboarding">Tving</a></li>
-						<li><a href="https://www.coupangplay.com/">Coupang</a></li>
-						<li><a href="https://www.disneyplus.com/ko-kr">disneyplus</a></li>
-						<li><a href="https://www.netflix.com/kr/">netflix</a></li>
-					</ul>
-				</nav>
+			<header>		
+				<div id="container">
+					<form action='<c:url value="/board/board" />' method="get">
+			    	<h1><a href="<c:url value="/" />">HOME</a></h1>
+					<div class="search-var">
+						<div class="dropdown">
+						  <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+						    제목 <span class="caret"></span>
+						  </button>
+						  <ul class="dropdown-menu">
+						    <li><a class="dropdown-item" href="javascript:void(0)" onclick="fnSelect('title')">제목</a></li>
+						    <li><a class="dropdown-item" href="javascript:void(0)" onclick="fnSelect('content')">내용</a></li>
+						  </ul>
+						</div>
+						<input  type="text" class="search-input" name="keyword" value="${ param.keyword }"/>
+				        <button type="submit" class="btn btn-outline-success" id="btn">검색</button>		
+				        <c:if test="${user_no != null}">
+				        	<button id="write-btn">글작성</button>
+						</c:if>		
+					</div>
+					</form>
+				</div>
 			</header>		
 		</div>
 		
-		<div id="container">
-		<form action='<c:url value="/board/board"/>' method="get">
-			<div class="search-var">
-				<div class="dropdown">
-				  <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-				    제목 <span class="caret"></span>
-				  </button>
-				  <ul class="dropdown-menu">
-				    <li><a class="dropdown-item"  href="javascript:void(0)">제목</a></li>
-				    <li><a class="dropdown-item"  href="javascript:void(0)">내용</a></li>
-				  </ul>
-				</div>
-				<input  type="text" class="search-input" name="keyword" value="${ param.keyword }"/>
-		        <button type="submit" class="btn btn-outline-success" id="btn">검색</button>		
-		        <c:if test="${user_no != null}">
-		        	<button id="write-btn">글작성</button>
-				</c:if>	
-			</div>		
-		</form>
+		<div id="main-container">
 			<div>
 				<div id="list-title">
 					<div style="padding: 5px 5px; font-size: 25px; font-family: fantasy; ">NO</div>
@@ -61,30 +54,64 @@
 					<div style="padding: 5px 5px; font-size: 25px;     font-weight: 900; ">작성시간</div>
 				</div>
 			</div>
-			<%-- <c:forEach var="articleDTO" items="${list}"> --%>
+			<c:forEach var="articleDTO" items="${list}">
 				<div>
 					<div id="articleList" style="position: relative;">
-						<div style="padding: 10px 40px 10px 7px;">77</div>
-						<div style="padding: 10px 25px 10px 10px; width: 625px">제목이 보여짐rkskekfkakqktk</div>
-						<div style="padding: 10px 20px; width: 140px;">작성자</div>
-						<div style="padding: 10px 10px; ">2023-07-22</div>
+						<div style="padding: 10px 40px 10px 7px;"><a href="<c:url value="/community/notice/read${pr.sc.queryString}&article_no=${articleDTO.article_no}" />">${articleDTO.article_no}</a></div>
+						<div style="padding: 10px 25px 10px 10px; width: 625px"><a href="<c:url value="board/board/read${pr.sc.queryString}&article_no=${articleDTO.article_no}" />">${articleDTO.article_title}</a></div>
+						<div style="padding: 10px 20px; width: 140px;"><a href="<c:url value="board/board/read${pr.sc.queryString}&article_no=${articleDTO.article_no}" />">${articleDTO.user_no}</a></div>
+						<div style="padding: 10px 10px; "><fmt:formatDate value="${articleDTO.article_create_dt}" pattern="yyyy-MM-dd" type="date"/></div>
 					</div>
-				</div>
-			<%-- </c:forEach> --%>
+				</div>				
+			</c:forEach>
+			<c:if test="${totalCnt == null || totalCnt == 0}">
+				<div class="title-line" style="text-align: center;">
+	  	         	등록된 공지사항이 없습니다.
+	    	   	</div>
+			</c:if>
+			<c:if test="${totalCnt != null || totalCnt != 0}">
+				<!-- 페이지 번호 배너-->
+		        <div class="page-num" style="margin-top: 20px;">
+		          <nav aria-label="Page navigation example" class="d-flex flex-row justify-content-center">
+		            <ul class="pagination">
+		            <c:if test="${pr.showPrev}">
+			            <li class="page-item">
+			                <a class="page-link" href='<c:url value="/board/board${pr.sc.getQueryString(pr.beginPage-1)}" />' aria-label="Previous">
+			                  <span aria-hidden="true">&laquo;</span>
+			                </a>
+			              </li>
+		            </c:if>
+		            <c:forEach var="i" begin="${pr.beginPage }" end="${pr.endPage }">
+		            	<li class="page-item ${i == pr.sc.page ? 'active' : ''}">
+		            		<a class="page-link" href='<c:url value="/board/board${pr.sc.getQueryString(i)}" />'>${i}</a>
+		            	</li>
+		            </c:forEach>
+		              <c:if test="${pr.showNext}">
+			              <li class="page-item">
+			                <a class="page-link" href='<c:url value="/board/board${pr.sc.getQueryString(pr.endPage+1)}" />' aria-label="Next">
+			                  <span aria-hidden="true">&raquo;</span>
+			                </a>
+			              </li>
+		              </c:if>
+		              
+		            </ul>
+		          </nav>
+		        </div>
+			</c:if>
+	
 		</div>
-		
+
 
 		
-		<script>
-			$(document).ready(function(){
-				/* 드롭다운 */
-				$('.dropdown .dropdown-menu li > a').bind('click', function (e) {
-				    var html = $(this).html();
-				    $('.dropdown button.dropdown-toggle').html(html + ' <span class="caret"></span>');
-				});				
-			});
-
-		</script>
+	<script>
+		$(document).ready(function(){
+			/* 드롭다운 */
+			$('.dropdown .dropdown-menu li > a').bind('click', function (e) {
+			    var html = $(this).html();
+			    $('.dropdown button.dropdown-toggle').html(html + ' <span class="caret"></span>');
+			});				
+		});
+	</script>
 		
 
 
