@@ -3,11 +3,13 @@ package com.ottt.ottt.service.board;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.ottt.ottt.dao.board.BoardDaoImpl;
 import com.ottt.ottt.domain.SearchItem;
 import com.ottt.ottt.dto.ArticleDTO;
 
+@Service
 public class BoardServiceImpl implements BoardService {
 	
 	@Autowired
