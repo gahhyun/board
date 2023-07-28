@@ -40,7 +40,7 @@ public class BoardController {
 			
 			List<ArticleDTO> list = boardService.getPage(sc);
 			m.addAttribute("list", list);
-			m.addAttribute("pageResolver",pageResolver);
+			m.addAttribute("pr",pageResolver);
 			
 			if(session.getAttribute("id") !=null) {
 				/* 방식이 이해가 안감 - 중간의 String을 쓰는 이유는? */
@@ -76,13 +76,13 @@ public class BoardController {
 	
 	
 	
-	@GetMapping("/notice/write")
+	@GetMapping("/board/write")
 	public String write(Model m) {
 		m.addAttribute("mode", "new");
 		return "/board/boardPost";
 	}
 	
-	@PostMapping("/borad/writePost")
+	@PostMapping("/board/write")
 	public String writePost(ArticleDTO articleDTO, RedirectAttributes rattr, Model m, HttpSession session) {
 		String writer = (String) session.getAttribute("id");
 		UserDTO userDTO = loginUserDao.select(writer);

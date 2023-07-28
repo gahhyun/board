@@ -14,6 +14,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js" integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="${path}/resources/css/board/board.css" >
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 
 <style type="text/css">
@@ -94,6 +95,13 @@
    	<script type="text/javascript">
    		$(document).ready(function() {
 			$("#writeBtn").on("click", function() {
+				if("${sessionScope.user_no}" == null || "${sessionScope.user_no}" == ""){
+					swal("로그인 후 이용가능합니다.","로그인을 해주세요.", "warning")
+					.then(function(){
+						location.href="/ottt/login";                   
+					});
+					return;					
+				}
 				location.href="<c:url value='/board/board/write' />"
 			})
 		})
